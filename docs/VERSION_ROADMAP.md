@@ -16,7 +16,7 @@ Every milestone is a learning unit and must produce a testable result. A version
 - [ ] APK artifact is available from GitHub Actions.
 - [ ] Notes explain the manifest, Activity, Gradle files, and APK output.
 
-## V0.2.0 — UI and design system
+## V0.2.0 — UI and design system (in progress)
 
 **Learn:** Jetpack Compose, composables, state, Material components, navigation, animation.
 
