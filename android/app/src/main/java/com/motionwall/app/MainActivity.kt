@@ -55,6 +55,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -237,6 +238,8 @@ private fun HomeScreen(
     onWallpaperSelected: (String) -> Unit,
     onFavorite: (String) -> Unit
 ) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val columns = when { screenWidth < 360 -> 1; screenWidth >= 600 -> 3; else -> 2 }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 22.dp, bottom = 28.dp),
@@ -245,8 +248,8 @@ private fun HomeScreen(
         item { ScreenHeader("MotionWall", "Your screen.\nYour universe.", "Discover a little more life for your display.") }
         item { FeaturedMotionCard(onExplore) }
         item { SectionHeading("Made to move") }
-        items(wallpapers.chunked(2)) { row ->
-            WallpaperGridRow(row, favorites, onWallpaperSelected, onFavorite)
+        items(wallpapers.chunked(columns)) { row ->
+            WallpaperGridRow(row, favorites, onWallpaperSelected, onFavorite, columns)
         }
         if (showArtworkHints) {
             item {
@@ -266,7 +269,9 @@ private fun ExploreScreen(
     onCategorySelected: (String) -> Unit,
     onFavorite: (String) -> Unit,
     onWallpaperSelected: (String) -> Unit
-) {
+ ) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val columns = when { screenWidth < 360 -> 1; screenWidth >= 600 -> 3; else -> 2 }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 22.dp, bottom = 28.dp),
@@ -311,8 +316,8 @@ private fun ExploreScreen(
                 )
             }
         } else {
-            items(wallpapers.chunked(2)) { row ->
-                WallpaperGridRow(row, favorites, onWallpaperSelected, onFavorite)
+            items(wallpapers.chunked(columns)) { row ->
+                WallpaperGridRow(row, favorites, onWallpaperSelected, onFavorite, columns)
             }
         }
     }
@@ -324,7 +329,9 @@ private fun FavoritesScreen(
     onExplore: () -> Unit,
     onWallpaperSelected: (String) -> Unit,
     onFavorite: (String) -> Unit
-) {
+ ) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val columns = when { screenWidth < 360 -> 1; screenWidth >= 600 -> 3; else -> 2 }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 22.dp, bottom = 28.dp),
@@ -343,8 +350,8 @@ private fun FavoritesScreen(
         } else {
             val savedLabel = wallpapers.size.toString() + if (wallpapers.size == 1) " saved wallpaper" else " saved wallpapers"
             item { SectionHeading(savedLabel) }
-            items(wallpapers.chunked(2)) { row ->
-                WallpaperGridRow(row, wallpapers.map { it.id }.toSet(), onWallpaperSelected, onFavorite)
+            items(wallpapers.chunked(columns)) { row ->
+                WallpaperGridRow(row, wallpapers.map { it.id }.toSet(), onWallpaperSelected, onFavorite, columns)
             }
         }
     }
@@ -471,7 +478,8 @@ private fun WallpaperGridRow(
     wallpapers: List<Wallpaper>,
     favorites: Set<String>,
     onWallpaperSelected: (String) -> Unit,
-    onFavorite: (String) -> Unit
+    onFavorite: (String) -> Unit,
+    columns: Int
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
         wallpapers.forEach { wallpaper ->
@@ -483,7 +491,7 @@ private fun WallpaperGridRow(
                 modifier = Modifier.weight(1f)
             )
         }
-        if (wallpapers.size == 1) Spacer(modifier = Modifier.weight(1f))
+        repeat((columns - wallpapers.size).coerceAtLeast(0)) { Spacer(modifier = Modifier.weight(1f)) }
     }
 }
 
