@@ -21,15 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * V0.1 entry point.
- *
- * Keep this Activity deliberately small: later milestones will move screens,
- * theme tokens, and reusable components into their own packages.
+ * V0.1 entry point. This remains intentionally small while we learn
+ * Activity lifecycle, Compose, Gradle, and debug APK installation.
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +89,8 @@ private fun FoundationScreen() {
             Text(
                 text = "Your screen.\nYour universe\nin motion.",
                 color = Color(0xFFFFF7FF),
-                fontSize =  fortyEightSp,
-                lineHeight =  fiftySixSp,
+                fontSize = 48.sp,
+                lineHeight = 56.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -107,10 +104,7 @@ private fun FoundationScreen() {
 
             Spacer(modifier = Modifier.height(36.dp))
 
-            Surface(
-                shape = RoundedCornerShape(50),
-                color = Color(0xFF2B1C3F)
-            ) {
+            Surface(shape = RoundedCornerShape(50), color = Color(0xFF2B1C3F)) {
                 Text(
                     text = "VERSION 0.1.0  •  FOUNDATION",
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
@@ -126,12 +120,8 @@ private fun FoundationScreen() {
             Text(
                 text = "Learn it. Build it. Test it.",
                 color = Color(0xFF9D8EAF),
-                fontSize = 13.sp,
-                textAlign = TextAlign.Start
+                fontSize = 13.sp
             )
         }
     }
 }
-
-private val fortyEightSp = 48.sp
-private val fiftySixSp = 56.sp
