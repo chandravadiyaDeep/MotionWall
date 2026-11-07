@@ -25,15 +25,15 @@ MotionWall is a native Android live-wallpaper app focused on anime, Gen Z, aesth
 | 0.8.0 | Optimization | Battery, memory, compatibility, reliability |
 | 1.0.0 | First complete release | Integration, regression tests, release APK |
 
-## Current milestone: V0.1.0
+## Current milestone: V0.2.0
 
 V0.1 is intentionally small. Its acceptance criteria are:
 
 - [ ] Android project builds with the Gradle wrapper.
-- [ ] App launches on a physical Android device.
-- [ ] App shows a simple MotionWall foundation screen.
-- [ ] Debug APK can be downloaded and installed.
-- [ ] GitHub Actions build succeeds.
+- [x] V0.1 app launches on a physical Android device.
+- [x] V0.1 foundation screen verified on a physical Android device.
+- [x] V0.1 debug APK downloaded and installed.
+- [x] V0.1 GitHub Actions build and unit tests succeed.
 - [ ] Learning and test notes are documented.
 
 ## Build locally
@@ -58,7 +58,7 @@ APK output: `android/app/build/outputs/apk/debug/app-debug.apk`.
 
 ## Project website
 
-The static project website is in `website/`. It is deployed by GitHub Actions to GitHub Pages. APK builds are produced separately by the Android workflow and published as workflow artifacts; tagged releases can later attach signed release APKs.
+The static project website is in `website/`. It is deployed by GitHub Actions to GitHub Pages. APK builds are produced by GitHub Actions and published as prerelease assets for direct phone download. The static website is now considered the permanent project landing page; new product development is focused on the Android app.
 
 ## Important product constraints
 
