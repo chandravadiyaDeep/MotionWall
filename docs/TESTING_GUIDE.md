@@ -42,3 +42,32 @@
 - Result: PASS / FAIL / BLOCKED
 - Logs / screenshots:
 - Follow-up issue:
+
+
+## V0.2 UI verification commands
+
+Run from the `android/` directory:
+
+```bash
+gradle --no-daemon assembleDebug testDebugUnitTest
+```
+
+For connected emulator/device UI smoke tests:
+
+```bash
+gradle --no-daemon connectedDebugAndroidTest
+```
+
+The repository's current GitHub Actions workflow runs the debug APK build and local JVM unit tests. It does not currently run connected-device instrumentation tests. Run those separately on an available emulator or physical Android device.
+
+V0.2 manual checks:
+- [ ] Launch from a cold start and verify Home renders.
+- [ ] Switch between Home, Explore, Favorites, and Settings.
+- [ ] Search by title, category, and tag; clear search.
+- [ ] Select each category and reset to All.
+- [ ] Add/remove favorites from a card and from detail.
+- [ ] Open a wallpaper detail and return using both visible Back and Android system Back.
+- [ ] Verify empty Favorites and no-results recovery actions.
+- [ ] Toggle Reduce motion and Artwork hints.
+- [ ] Check narrow phone and wider/tablet layout.
+- [ ] Confirm no unexpected permission prompts or network dependency.
