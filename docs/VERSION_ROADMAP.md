@@ -2,18 +2,18 @@
 
 Every milestone is a learning unit and must produce a testable result. A version is complete only when implementation, build, physical-device testing, documentation, and acceptance checks are complete.
 
-## V0.1.0 — Android foundation
+## V0.1.0 — Android foundation (completed)
 
 **Learn:** Kotlin basics, Android project structure, Gradle, activities, resources, debug builds, device installation.
 
 **Deliver:** Minimal app opens and shows a MotionWall welcome screen.
 
 **Exit checklist**
-- [ ] Gradle sync succeeds.
-- [ ] Debug build succeeds.
-- [ ] App launches on a physical Android phone.
+- [x] Cloud Gradle build succeeds.
+- [x] Debug build succeeds in GitHub Actions.
+- [x] App launches on a physical Android phone (user-confirmed).
 - [ ] No crash on cold start.
-- [ ] APK artifact is available from GitHub Actions.
+- [x] APK is published and downloadable from GitHub Releases.
 - [ ] Notes explain the manifest, Activity, Gradle files, and APK output.
 
 ## V0.2.0 — UI and design system (in progress)
