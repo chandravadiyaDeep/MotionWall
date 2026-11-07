@@ -23,11 +23,11 @@ Every milestone is a learning unit and must produce a testable result. A version
 **Deliver:** Home, Explore, Favorites, and Settings screens with reusable components and a coherent design system.
 
 **Exit checklist**
-- [ ] Dark-first visual system and typography.
-- [ ] Bottom navigation.
-- [ ] Reusable wallpaper card and category chip.
-- [ ] Responsive layouts and accessible touch targets.
-- [ ] UI state survives ordinary recomposition.
+- [x] Dark-first visual system and typography.
+- [x] Bottom navigation.
+- [x] Reusable wallpaper card and category chip.
+- [x] Responsive 1/2/3-column catalog layout and 48dp interactive controls/content descriptions.
+- [x] UI state survives ordinary recomposition and top-level destination changes.
 - [ ] Physical-device UI test notes.
 
 ## V0.3.0 — Wallpaper library
