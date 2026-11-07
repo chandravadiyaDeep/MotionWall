@@ -12,8 +12,9 @@ on:
       - ".github/workflows/android-build.yml"
   workflow_dispatch:
 
+# Required to publish a downloadable prerelease APK after a successful build.
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -69,10 +70,27 @@ jobs:
         working-directory: android
         run: gradle --no-daemon assembleDebug testDebugUnitTest
 
-      - name: Upload debug APK
+      - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: motionwall-v0.1.0-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+      # Publish a prerelease asset so phone users can download the APK directly.
+      # Pull requests never publish releases.
+      - name: Publish phone-installable prerelease
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          TAG="v0.1.0-build-${RUN_NUMBER}"
+          gh release create "$TAG" \
+            "android/app/build/outputs/apk/debug/app-debug.apk#MotionWall-v0.1.0-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "MotionWall 0.1.0 — Build ${RUN_NUMBER}" \
+            --prerelease \
+            --notes "Automated development build. Install for testing only. This is not a production release."
