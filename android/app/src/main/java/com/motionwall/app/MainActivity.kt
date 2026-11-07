@@ -5,7 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +18,8 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -58,6 +65,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.motionwall.app.data.filterWallpapers
 import com.motionwall.app.data.sampleWallpapers
 import com.motionwall.app.model.Wallpaper
 
@@ -106,16 +114,7 @@ private fun MotionWallApp() {
     var reduceMotion by remember { mutableStateOf(false) }
     var showArtworkHints by remember { mutableStateOf(true) }
 
-    val detailWallpaper = sampleWallpapers.firstOrNull { it.id == selectedWallpaperId }
-    val filteredWallpapers = sampleWallpapers.filter { wallpaper ->
-        val categoryMatches = selectedCategory == "All" || wallpaper.category == selectedCategory
-        val query = searchQuery.trim()
-        val searchMatches = query.isEmpty() ||
-            wallpaper.title.contains(query, ignoreCase = true) ||
-            wallpaper.category.contains(query, ignoreCase = true) ||
-            wallpaper.tags.any { it.contains(query, ignoreCase = true) }
-        categoryMatches && searchMatches
-    }
+    val filteredWallpapers = filterWallpapers(sampleWallpapers, selectedCategory, searchQuery)
     val favoriteWallpapers = sampleWallpapers.filter { it.id in favorites }
 
     // Android system Back closes the detail destination before leaving the app.
@@ -157,6 +156,10 @@ private fun MotionWallApp() {
         AnimatedContent(
             targetState = selectedWallpaperId,
             label = "motionwall-destination",
+            transitionSpec = {
+                if (reduceMotion) EnterTransition.None togetherWith androidx.compose.animation.ExitTransition.None
+                else fadeIn(animationSpec = tween(180)) togetherWith fadeOut(animationSpec = tween(120))
+            },
             modifier = Modifier.fillMaxSize().padding(innerPadding)
         ) { destinationId ->
             val wallpaper = sampleWallpapers.firstOrNull { it.id == destinationId }
@@ -194,6 +197,7 @@ private fun MotionWallApp() {
                     else -> HomeScreen(
                         wallpapers = sampleWallpapers,
                         favorites = favorites,
+                        showArtworkHints = showArtworkHints,
                         onExplore = { selectedTab = "Explore" },
                         onWallpaperSelected = { selectedWallpaperId = it },
                         onFavorite = { id -> favorites = toggleFavorite(favorites, id) }
@@ -229,6 +233,7 @@ private fun HomeScreen(
     wallpapers: List<Wallpaper>,
     favorites: Set<String>,
     onExplore: () -> Unit,
+    showArtworkHints: Boolean,
     onWallpaperSelected: (String) -> Unit,
     onFavorite: (String) -> Unit
 ) {
@@ -243,8 +248,10 @@ private fun HomeScreen(
         items(wallpapers.chunked(2)) { row ->
             WallpaperGridRow(row, favorites, onWallpaperSelected, onFavorite)
         }
-        item {
-            Text("V0.2 preview • Original gradient artwork", color = Color(0xFF8E7FA1), fontSize = 10.sp)
+        if (showArtworkHints) {
+            item {
+                Text("V0.2 preview • Original gradient artwork", color = Color(0xFF8E7FA1), fontSize = 10.sp)
+            }
         }
     }
 }
@@ -503,7 +510,7 @@ private fun WallpaperCard(
                 ) {
                     IconButton(
                         onClick = onFavorite,
-                        modifier = Modifier.size(44.dp).semantics {
+                        modifier = Modifier.size(48.dp).semantics {
                             contentDescription = if (isFavorite) "Remove " + wallpaper.title + " from favorites" else "Add " + wallpaper.title + " to favorites"
                         }
                     ) {
@@ -575,7 +582,7 @@ private fun CategoryChips(selectedCategory: String, onCategorySelected: (String)
             Surface(
                 shape = RoundedCornerShape(50),
                 color = if (active) Accent else Color(0xFF21182F),
-                modifier = Modifier.clip(RoundedCornerShape(50)).clickable { onCategorySelected(category) }
+                modifier = Modifier.heightIn(min = 48.dp).clip(RoundedCornerShape(50)).clickable { onCategorySelected(category) }
             ) {
                 Text(
                     category,
@@ -611,7 +618,7 @@ private fun EmptyState(title: String, message: String, actionLabel: String, onAc
 }
 
 @Composable
-private fun SettingsGroup(title: String, content: @Composable Column.() -> Unit) {
+private fun SettingsGroup(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Panel).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
