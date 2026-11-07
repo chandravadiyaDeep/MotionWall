@@ -73,7 +73,7 @@ jobs:
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: motionwall-v0.1.0-debug-apk
+          name: motionwall-v0.2.0-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
@@ -87,10 +87,10 @@ jobs:
           RUN_NUMBER: ${{ github.run_number }}
         run: |
           set -euo pipefail
-          TAG="v0.1.0-build-${RUN_NUMBER}"
+          TAG="v0.2.0-build-${RUN_NUMBER}"
           gh release create "$TAG" \
-            "android/app/build/outputs/apk/debug/app-debug.apk#MotionWall-v0.1.0-debug.apk" \
+            "android/app/build/outputs/apk/debug/app-debug.apk#MotionWall-v0.2.0-debug.apk" \
             --repo "$GITHUB_REPOSITORY" \
-            --title "MotionWall 0.1.0 — Build ${RUN_NUMBER}" \
+            --title "MotionWall 0.2.0 — Build ${RUN_NUMBER}" \
             --prerelease \
-            --notes "Automated development build. Install for testing only. This is not a production release."
+            --notes "Automated V0.2 development build. Install for testing only. This build contains the first Compose UI preview. This is not a production release."
