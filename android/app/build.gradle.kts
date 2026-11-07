@@ -12,8 +12,8 @@ android {
         applicationId = "com.motionwall.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,7 +48,7 @@ kotlin {
 }
 
 dependencies {
-    // Compose UI foundation for V0.1; navigation and feature libraries arrive in later versions.
+    // Compose UI components for the V0.2 interface preview.
     val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
