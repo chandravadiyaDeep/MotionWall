@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -56,6 +57,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -66,15 +70,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.motionwall.app.data.CatalogResult
+import com.motionwall.app.data.WallpaperRepository
 import com.motionwall.app.data.filterWallpapers
-import com.motionwall.app.data.sampleWallpapers
 import com.motionwall.app.model.Wallpaper
 
 private val Background = Color(0xFF0B0713)
 private val Panel = Color(0xFF171021)
 private val Accent = Color(0xFFFF8CCF)
 private val Muted = Color(0xFFB7A9C8)
-private val Categories = listOf("All", "Aesthetic", "Gen Z", "Anime", "Dark", "Interactive")
 
 /** Main Android entry point. The V0.2 app remains a native Compose application. */
 class MainActivity : ComponentActivity() {
@@ -114,9 +118,15 @@ private fun MotionWallApp() {
     var favorites by remember { mutableStateOf(setOf<String>()) }
     var reduceMotion by remember { mutableStateOf(false) }
     var showArtworkHints by remember { mutableStateOf(true) }
+    var catalogRevision by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+    // The catalog is tiny and bundled, so one validated read per app composition is sufficient.
+    val catalogResult = remember(context, catalogRevision) { WallpaperRepository().load(context) }
+    val catalog = (catalogResult as? CatalogResult.Success)?.wallpapers.orEmpty()
+    val categories = listOf("All") + catalog.map { it.category }.distinct().sorted()
 
-    val filteredWallpapers = filterWallpapers(sampleWallpapers, selectedCategory, searchQuery)
-    val favoriteWallpapers = sampleWallpapers.filter { it.id in favorites }
+    val filteredWallpapers = filterWallpapers(catalog, selectedCategory, searchQuery)
+    val favoriteWallpapers = catalog.filter { it.id in favorites }
 
     // Android system Back closes the detail destination before leaving the app.
     BackHandler(enabled = selectedWallpaperId != null) {
@@ -163,7 +173,10 @@ private fun MotionWallApp() {
             },
             modifier = Modifier.fillMaxSize().padding(innerPadding)
         ) { destinationId ->
-            val wallpaper = sampleWallpapers.firstOrNull { it.id == destinationId }
+            if (catalogResult is CatalogResult.Failure) {
+                CatalogErrorScreen(message = catalogResult.message, onRetry = { catalogRevision++ })
+            } else {
+            val wallpaper = catalog.firstOrNull { it.id == destinationId }
             if (wallpaper != null) {
                 WallpaperDetailScreen(
                     wallpaper = wallpaper,
@@ -175,6 +188,7 @@ private fun MotionWallApp() {
                 when (selectedTab) {
                     "Explore" -> ExploreScreen(
                         wallpapers = filteredWallpapers,
+                        categories = categories,
                         selectedCategory = selectedCategory,
                         searchQuery = searchQuery,
                         favorites = favorites,
@@ -196,7 +210,7 @@ private fun MotionWallApp() {
                         onArtworkHintsChange = { showArtworkHints = it }
                     )
                     else -> HomeScreen(
-                        wallpapers = sampleWallpapers,
+                        wallpapers = catalog,
                         favorites = favorites,
                         showArtworkHints = showArtworkHints,
                         onExplore = { selectedTab = "Explore" },
@@ -205,7 +219,23 @@ private fun MotionWallApp() {
                     )
                 }
             }
+            }
         }
+    }
+}
+
+
+/** Visible recovery state for malformed or unavailable bundled catalog data. */
+@Composable
+private fun CatalogErrorScreen(message: String, onRetry: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Wallpaper library unavailable", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(message, color = Muted, fontSize = 13.sp, modifier = Modifier.padding(vertical = 14.dp))
+        Button(onClick = onRetry) { Text("Try again") }
     }
 }
 
@@ -253,7 +283,7 @@ private fun HomeScreen(
         }
         if (showArtworkHints) {
             item {
-                Text("V0.2 preview • Original gradient artwork", color = Color(0xFF8E7FA1), fontSize = 10.sp)
+                Text("V0.3 local catalog • Original artwork", color = Color(0xFF8E7FA1), fontSize = 10.sp)
             }
         }
     }
@@ -262,6 +292,7 @@ private fun HomeScreen(
 @Composable
 private fun ExploreScreen(
     wallpapers: List<Wallpaper>,
+    categories: List<String>,
     selectedCategory: String,
     searchQuery: String,
     favorites: Set<String>,
@@ -299,7 +330,7 @@ private fun ExploreScreen(
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 SectionHeading("Categories")
-                CategoryChips(selectedCategory, onCategorySelected)
+                CategoryChips(selectedCategory, categories, onCategorySelected)
             }
         }
         item { SectionHeading(wallpapers.size.toString() + " wallpapers") }
@@ -390,12 +421,12 @@ private fun SettingsScreen(
             SettingsGroup(title = "About MotionWall") {
                 Text("A motion wallpaper playground, built step by step.", color = Color.White, fontSize = 14.sp)
                 Text(
-                    "Wallpaper preview and applying are not available yet. Video preview is planned for V0.4; Android live wallpaper support is planned for V0.5.",
+                    "This catalog works offline with bundled original artwork. Video preview is planned for V0.4; Android live wallpaper support is planned for V0.5.",
                     color = Muted,
                     fontSize = 12.sp,
                     lineHeight = 19.sp
                 )
-                Text("Version 0.2.0 • UI preview", color = Color(0xFF8E7FA1), fontSize = 11.sp)
+                Text("Version 0.3.0 • Local wallpaper library", color = Color(0xFF8E7FA1), fontSize = 11.sp)
             }
         }
         item {
@@ -446,6 +477,7 @@ private fun WallpaperDetailScreen(
                 }
             }
             Text(wallpaper.description, color = Muted, fontSize = 14.sp, lineHeight = 22.sp)
+            Text("Artwork: ${wallpaper.source}  •  License: ${wallpaper.license}", color = Color(0xFF8E7FA1), fontSize = 10.sp)
         }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -554,6 +586,12 @@ private fun WallpaperArtwork(wallpaper: Wallpaper, modifier: Modifier = Modifier
                 center = Offset(size.width * .82f, size.height * .83f)
             )
         }
+        Image(
+            painter = painterResource(wallpaper.thumbnailResId),
+            contentDescription = "${wallpaper.title} original artwork",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 
@@ -583,9 +621,9 @@ private fun FeaturedMotionCard(onExplore: () -> Unit) {
 }
 
 @Composable
-private fun CategoryChips(selectedCategory: String, onCategorySelected: (String) -> Unit) {
+private fun CategoryChips(selectedCategory: String, categories: List<String>, onCategorySelected: (String) -> Unit) {
     Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(9.dp)) {
-        Categories.forEach { category ->
+        categories.forEach { category ->
             val active = selectedCategory == category
             Surface(
                 shape = RoundedCornerShape(50),
