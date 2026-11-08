@@ -1,0 +1,154 @@
+[
+  {
+    "id": "nebula-bloom",
+    "title": "Nebula Bloom",
+    "category": "Aesthetic",
+    "description": "Soft cosmic colour flow",
+    "tags": [
+      "space",
+      "pink",
+      "cosmic",
+      "gradient"
+    ],
+    "colors": [
+      "#FFFF8BCB",
+      "#FF7048C8",
+      "#FF17112E"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "cyber-pulse",
+    "title": "Cyber Pulse",
+    "category": "Gen Z",
+    "description": "Electric blue energy",
+    "tags": [
+      "neon",
+      "blue",
+      "cyber",
+      "gaming"
+    ],
+    "colors": [
+      "#FF66E5FF",
+      "#FF4C58D8",
+      "#FF10152F"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "velvet-orbit",
+    "title": "Velvet Orbit",
+    "category": "Dark",
+    "description": "Deep violet ambient motion",
+    "tags": [
+      "violet",
+      "amoled",
+      "dark",
+      "space"
+    ],
+    "colors": [
+      "#FFBD8CFF",
+      "#FF542D91",
+      "#FF090713"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "solar-drift",
+    "title": "Solar Drift",
+    "category": "Aesthetic",
+    "description": "Warm sunset atmosphere",
+    "tags": [
+      "sunset",
+      "orange",
+      "warm",
+      "dreamy"
+    ],
+    "colors": [
+      "#FFFFB36B",
+      "#FFE45B9A",
+      "#FF28112E"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "mint-wave",
+    "title": "Mint Wave",
+    "category": "Aesthetic",
+    "description": "Cool mint and ocean tones",
+    "tags": [
+      "mint",
+      "ocean",
+      "calm",
+      "green"
+    ],
+    "colors": [
+      "#FF9AF0D0",
+      "#FF318F9C",
+      "#FF102D42"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "ember-night",
+    "title": "Ember Night",
+    "category": "Dark",
+    "description": "Warm ember glow on midnight",
+    "tags": [
+      "ember",
+      "fire",
+      "amoled",
+      "night"
+    ],
+    "colors": [
+      "#FFFF9B65",
+      "#FF9D365F",
+      "#FF130D1D"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "pixel-dream",
+    "title": "Pixel Dream",
+    "category": "Gen Z",
+    "description": "Playful digital colour fields",
+    "tags": [
+      "pixel",
+      "digital",
+      "purple",
+      "gaming"
+    ],
+    "colors": [
+      "#FFFF7CCB",
+      "#FF7C73FF",
+      "#FF1A1740"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  },
+  {
+    "id": "aurora-flow",
+    "title": "Aurora Flow",
+    "category": "Aesthetic",
+    "description": "Northern-light inspired colours",
+    "tags": [
+      "aurora",
+      "nature",
+      "green",
+      "blue"
+    ],
+    "colors": [
+      "#FF8AF0D2",
+      "#FF4E78C9",
+      "#FF171A3C"
+    ],
+    "assetType": "original-gradient",
+    "license": "Original generated gradient"
+  }
+]

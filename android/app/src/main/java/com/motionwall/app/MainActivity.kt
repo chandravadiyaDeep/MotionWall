@@ -49,6 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 
 /** Main Android entry point. V0.2 introduces the first responsive Compose workspace. */
 class MainActivity : ComponentActivity() {
@@ -71,21 +72,6 @@ private fun MotionWallTheme(content: @Composable () -> Unit) {
     )
 }
 
-private data class WallpaperPreview(
-    val title: String,
-    val category: String,
-    val description: String,
-    val colors: List<Color>
-)
-
-// Original gradient placeholders only; licensed wallpaper artwork arrives in V0.3.
-private val sampleWallpapers = listOf(
-    WallpaperPreview("Nebula Bloom", "Aesthetic", "Soft cosmic colour flow", listOf(Color(0xFFFF8BCB), Color(0xFF7048C8), Color(0xFF17112E))),
-    WallpaperPreview("Cyber Pulse", "Gen Z", "Electric blue energy", listOf(Color(0xFF66E5FF), Color(0xFF4C58D8), Color(0xFF10152F))),
-    WallpaperPreview("Velvet Orbit", "Dark", "Deep violet ambient motion", listOf(Color(0xFFBD8CFF), Color(0xFF542D91), Color(0xFF090713))),
-    WallpaperPreview("Solar Drift", "Aesthetic", "Warm sunset atmosphere", listOf(Color(0xFFFFB36B), Color(0xFFE45B9A), Color(0xFF28112E)))
-)
-
 @Composable
 private fun MotionWallApp() {
     var selectedTab by remember { mutableStateOf("Home") }
@@ -93,10 +79,13 @@ private fun MotionWallApp() {
     var searchQuery by remember { mutableStateOf("") }
     var favorites by remember { mutableStateOf(setOf<String>()) }
     val categories = listOf("All", "Aesthetic", "Gen Z", "Anime", "Dark", "Interactive")
-    val visibleWallpapers = sampleWallpapers.filter { wallpaper ->
+    val context = LocalContext.current
+    // Load the bundled catalog once; repository fallback prevents a broken asset from crashing startup.
+    val catalog = remember { WallpaperCatalogRepository.load(context) }
+    val visibleWallpapers = catalog.filter { wallpaper ->
         val matchesCategory = selectedCategory == "All" || wallpaper.category == selectedCategory
         val matchesSearch = wallpaper.title.contains(searchQuery, ignoreCase = true) ||
-            wallpaper.category.contains(searchQuery, ignoreCase = true)
+            wallpaper.category.contains(searchQuery, ignoreCase = true) || wallpaper.tags.any { it.contains(searchQuery, ignoreCase = true) }
         val matchesTab = selectedTab != "Favorites" || favorites.contains(wallpaper.title)
         matchesCategory && matchesSearch && matchesTab
     }
