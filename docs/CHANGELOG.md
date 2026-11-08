@@ -2,30 +2,26 @@
 
 All notable project changes are recorded here.
 
-## 0.2.0 — In progress
+## 0.3.0 — In progress
+
+- Replaced the in-memory sample list with a versioned local JSON catalog.
+- Added a typed repository with required-field, duplicate-ID, artwork, and color validation.
+- Added eight original bundled XML thumbnail compositions with a provenance/license register.
+- Connected Home, Explore, Favorites, and Detail to repository-backed catalog data.
+- Categories are derived from the catalog; search and category filters remain combined.
+- Added a visible retry state for catalog loading/validation failures.
+- Bumped Android version metadata and CI prerelease naming to 0.3.0.
+
+## 0.2.0 — Completed
 
 - Responsive Compose app shell with Home, Explore, Favorites, and Settings navigation.
-- Gradient-based wallpaper preview cards, category filters, search, and local favorites.
-- V0.2 debug APK build and physical-device verification pending.
+- Gradient-based wallpaper cards, category filters, search, and local favorites.
+- Added detail navigation, favorite controls, system/visible back, and empty-state recovery.
+- Added reduced-motion and artwork-hint preview preferences.
+- Added unit and Compose UI smoke tests.
 
 ## 0.1.0 — Foundation
 
 - Initial Kotlin + Jetpack Compose Android app.
 - Cloud build, unit tests, and direct GitHub Release APK distribution.
 - Permanent responsive GitHub Pages project landing page.
-
-## Unreleased
-
-- Initialize MotionWall project documentation and GitHub workflow foundation.
-- Prepare V0.1 Android app skeleton.
-
-
-## [0.2.0] — V0.2 UI completion in progress
-
-- Split the local wallpaper metadata into a typed model and sample catalog.
-- Added a dedicated Explore experience with case-insensitive title, category, and tag search.
-- Added Favorites, Settings, and wallpaper detail destinations.
-- Added card-to-detail navigation, favorite controls, visible/system back navigation, and empty-state actions.
-- Added reduced-motion and artwork-hint preview preferences; these are session-only and do not change Android system settings.
-- Added unit coverage for catalog filtering/favorite transformations and connected-device UI navigation smoke tests.
-- Actual wallpaper playback and applying remain out of scope until V0.4/V0.5.
