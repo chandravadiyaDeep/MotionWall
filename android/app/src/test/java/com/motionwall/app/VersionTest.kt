@@ -13,7 +13,7 @@ class VersionTest {
     }
 
     @Test
-    fun versionCodeIsTwoForV020() {
+    fun versionCodeIsThreeForV030() {
         assertEquals(3, BuildConfig.VERSION_CODE)
     }
 
