@@ -16,7 +16,7 @@ Every milestone is a learning unit and must produce a testable result. A version
 - [x] APK is published and downloadable from GitHub Releases.
 - [ ] Notes explain the manifest, Activity, Gradle files, and APK output.
 
-## V0.2.0 — UI and design system (in progress)
+## V0.2.0 — UI and design system (completed)
 
 **Learn:** Jetpack Compose, composables, state, Material components, navigation, animation.
 
@@ -28,9 +28,9 @@ Every milestone is a learning unit and must produce a testable result. A version
 - [x] Reusable wallpaper card and category chip.
 - [x] Responsive 1/2/3-column catalog layout and 48dp interactive controls/content descriptions.
 - [x] UI state survives ordinary recomposition and top-level destination changes.
-- [ ] Physical-device UI test notes.
+- [x] Physical-device UI test notes.
 
-## V0.3.0 — Wallpaper library
+## V0.3.0 — Wallpaper library (in progress)
 
 **Learn:** Data classes, repository pattern, local JSON/assets, filtering, sorting, image loading.
 

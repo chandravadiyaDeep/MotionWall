@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "wallpapers": [
+    {
+      "id": "nebula-bloom",
+      "title": "Nebula Bloom",
+      "category": "Aesthetic",
+      "description": "Soft cosmic colour flow with a warm violet glow.",
+      "tags": [
+        "cosmic",
+        "gradient",
+        "pink",
+        "purple",
+        "space"
+      ],
+      "colors": [
+        "#FF8BCB",
+        "#7048C8",
+        "#17112E"
+      ],
+      "artwork": "nebula",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "cyber-pulse",
+      "title": "Cyber Pulse",
+      "category": "Gen Z",
+      "description": "Electric blue energy for a bold, futuristic screen.",
+      "tags": [
+        "cyber",
+        "blue",
+        "neon",
+        "technology",
+        "gradient"
+      ],
+      "colors": [
+        "#66E5FF",
+        "#4C58D8",
+        "#10152F"
+      ],
+      "artwork": "cyber",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "velvet-orbit",
+      "title": "Velvet Orbit",
+      "category": "Dark",
+      "description": "Deep violet ambient tones with a quiet orbital glow.",
+      "tags": [
+        "dark",
+        "violet",
+        "space",
+        "minimal",
+        "purple"
+      ],
+      "colors": [
+        "#BD8CFF",
+        "#542D91",
+        "#090713"
+      ],
+      "artwork": "velvet",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "solar-drift",
+      "title": "Solar Drift",
+      "category": "Aesthetic",
+      "description": "A warm sunset atmosphere in coral, amber, and rose.",
+      "tags": [
+        "sunset",
+        "orange",
+        "warm",
+        "pink",
+        "gradient"
+      ],
+      "colors": [
+        "#FFB36B",
+        "#E45B9A",
+        "#28112E"
+      ],
+      "artwork": "solar",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "emerald-current",
+      "title": "Emerald Current",
+      "category": "Nature",
+      "description": "A calm green current with layered luminous forms.",
+      "tags": [
+        "green",
+        "nature",
+        "calm",
+        "aurora",
+        "fresh"
+      ],
+      "colors": [
+        "#7DF0B2",
+        "#147D75",
+        "#071F26"
+      ],
+      "artwork": "emerald",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "amethyst-night",
+      "title": "Amethyst Night",
+      "category": "AMOLED",
+      "description": "Near-black violet tones designed for a quiet display.",
+      "tags": [
+        "amoled",
+        "black",
+        "violet",
+        "minimal",
+        "night"
+      ],
+      "colors": [
+        "#9B75FF",
+        "#3B236F",
+        "#05040A"
+      ],
+      "artwork": "amethyst",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "rose-circuit",
+      "title": "Rose Circuit",
+      "category": "Gen Z",
+      "description": "A playful rose and magenta circuit-inspired composition.",
+      "tags": [
+        "rose",
+        "pink",
+        "tech",
+        "circuit",
+        "neon"
+      ],
+      "colors": [
+        "#FF78B7",
+        "#B32F91",
+        "#220D2D"
+      ],
+      "artwork": "rose",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    },
+    {
+      "id": "arctic-glow",
+      "title": "Arctic Glow",
+      "category": "Abstract",
+      "description": "Cool cyan light over a deep midnight blue canvas.",
+      "tags": [
+        "arctic",
+        "cyan",
+        "blue",
+        "ice",
+        "abstract"
+      ],
+      "colors": [
+        "#9AF4FF",
+        "#397FC4",
+        "#07172D"
+      ],
+      "artwork": "arctic",
+      "source": "MotionWall original",
+      "license": "Original MotionWall artwork; distribution license pending"
+    }
+  ]
+}

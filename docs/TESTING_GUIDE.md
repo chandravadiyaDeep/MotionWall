@@ -71,3 +71,22 @@ V0.2 manual checks:
 - [ ] Toggle Reduce motion and Artwork hints.
 - [ ] Check narrow phone and wider/tablet layout.
 - [ ] Confirm no unexpected permission prompts or network dependency.
+
+
+## V0.3 local wallpaper library checks
+
+Automated JVM tests cover catalog schema parsing, unique IDs, unknown artwork keys, empty catalogs, color parsing, search, category filtering, and favorite state transformations.
+
+Manual checks on a physical Android device:
+- [ ] Launch in airplane mode; Home still shows the bundled wallpaper catalog.
+- [ ] Confirm all eight catalog entries render their matching local thumbnail artwork.
+- [ ] Search by a wallpaper title, category, and tag.
+- [ ] Combine a category filter with a search query.
+- [ ] Clear filters and confirm all entries return.
+- [ ] Open a wallpaper detail and verify title, category, tags, source, and license metadata.
+- [ ] Confirm no unexpected permission prompt or network request.
+- [ ] Check that the app still opens after force-stop and cold start.
+- [ ] Record device model, Android version, app version, and screenshots in the test report.
+
+Catalog recovery check:
+- Temporarily rename or invalidate the local catalog only in a local development build, launch the app, and verify the error message and Retry action. Restore the valid catalog before committing.
