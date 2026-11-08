@@ -1,7 +1,6 @@
 package com.motionwall.app.data
 
 import android.content.Context
-import android.graphics.Color as AndroidColor
 import androidx.compose.ui.graphics.Color
 import com.motionwall.app.R
 import com.motionwall.app.model.Wallpaper
@@ -34,7 +33,7 @@ class WallpaperRepository {
             val artworkName = item.requiredText("artwork")
             val artworkId = artworkResolver(artworkName)
             require(artworkId != 0) { "Missing artwork asset: $artworkName" }
-            val colors = item.getJSONArray("colors").toStringList().map { Color(AndroidColor.parseColor(it)) }
+            val colors = item.getJSONArray("colors").toStringList().map(::parseCatalogColor)
             require(colors.size >= 2) { "Wallpaper $id needs at least two colors." }
             Wallpaper(
                 id = id,
@@ -77,3 +76,11 @@ private fun JSONObject.requiredText(key: String): String =
 
 private fun JSONArray.toStringList(): List<String> =
     (0 until length()).map { getString(it).trim() }.filter { it.isNotEmpty() }
+
+/** Parse #RRGGBB or #AARRGGBB without relying on Android framework calls. */
+private fun parseCatalogColor(value: String): Color {
+    val hex = value.removePrefix("#")
+    require(hex.length == 6 || hex.length == 8) { "Invalid catalog color: $value" }
+    val argb = if (hex.length == 6) "FF$hex" else hex
+    return Color(argb.toLong(16))
+}
