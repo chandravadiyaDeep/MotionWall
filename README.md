@@ -16,7 +16,7 @@ MotionWall is a native Android live-wallpaper app focused on anime, Gen Z, aesth
 | Version | Milestone | Main learning |
 |---|---|---|
 | 0.1.0 | Android foundation | Kotlin, Gradle, Android app lifecycle, APK install |
-| 0.2.0 | UI and design system | Jetpack Compose, navigation, state, animation |
+| 0.2.0 | UI and design system | Jetpack Compose, navigation, state, animation |\n| 0.3.0 | Wallpaper library | Local JSON catalog, repository, bundled artwork, filters |
 | 0.3.0 | Wallpaper library | Data models, local assets, search and filters |
 | 0.4.0 | Preview system | Media playback, lifecycle, video controls |
 | 0.5.0 | Video live wallpaper | WallpaperService, Media3, Android system integration |
@@ -25,7 +25,7 @@ MotionWall is a native Android live-wallpaper app focused on anime, Gen Z, aesth
 | 0.8.0 | Optimization | Battery, memory, compatibility, reliability |
 | 1.0.0 | First complete release | Integration, regression tests, release APK |
 
-## Current milestone: V0.2.0
+## Current milestone: V0.3.0
 
 V0.1 is intentionally small. Its acceptance criteria are:
 
@@ -54,7 +54,7 @@ cd android
 .\gradlew.bat assembleDebug
 ```
 
-APK output: `android/app/build/outputs/apk/debug/app-debug.apk`.
+APK output: `android/app/build/outputs/apk/debug/app-debug.apk`. The current development version is 0.3.0; prerelease APKs are published by GitHub Actions after a successful push to `main`.
 
 ## Project website
 
