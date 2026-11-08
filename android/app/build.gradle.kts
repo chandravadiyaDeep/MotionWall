@@ -12,8 +12,8 @@ android {
         applicationId = "com.motionwall.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,7 +48,7 @@ kotlin {
 }
 
 dependencies {
-    // Compose UI components for the V0.2 interface preview.
+    // Compose UI components for the V0.3 local wallpaper catalog.
     val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
